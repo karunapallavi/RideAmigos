@@ -32,9 +32,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends Activity {
-    /**
-     * Called when the activity is first created.
-     */
+    
     String la = "", lo = "";
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -50,10 +48,11 @@ public class MainActivity extends Activity {
         Button btnLocation = (Button) findViewById(R.id.button);
         Button btnStop = (Button) findViewById(R.id.button2);
         //Button btnStart = (Button)findViewById(R.id.button);
-        final CountDownTimer cdtimer = new CountDownTimer(15000, 1000) {
+        final CountDownTimer cdtimer = new CountDownTimer(15000, 1000) { 
+            //initializing the timer
             @Override
             public void onTick(long millisUntilFinished) {
-                postData(la, lo);
+                postData(la, lo); //call to post lat and long to the URL
             }
 
             @Override
@@ -74,7 +73,8 @@ public class MainActivity extends Activity {
                         la = Double.toString(location.getLatitude());
                         lo = Double.toString(location.getLongitude());
                         TextView tv = (TextView) findViewById(R.id.textView);
-                        tv.setText("Your Location is:" + la + "--" + lo);
+                        //added reference to view the location real time on the device
+                        tv.setText("Location:" + la + " " + lo);
                     }
 
                     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -88,10 +88,12 @@ public class MainActivity extends Activity {
                 };
                 // Register the listener with the Location Manager to receive location updates
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                //can request for GPS location and use the one with best accuracy
             }
         });
 
         Button btnStart = (Button) findViewById(R.id.button);
+        //start button
         btnStart.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
@@ -104,6 +106,7 @@ public class MainActivity extends Activity {
         });
 
         btnStop.setOnClickListener(new OnClickListener() {
+            //stop button
             @Override
             public void onClick(View v) {
                 cdtimer.cancel();
@@ -116,7 +119,7 @@ public class MainActivity extends Activity {
     public void postData(String la, String lo) {
         // Create a new HttpClient and Post Header
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet htget = new HttpGet("<add url here>" + la + "/" + lo);
+        HttpGet htget = new HttpGet("<add url here>" + la + "/" + lo); // add URL here 
 
         try {
             // Execute HTTP Post Request
