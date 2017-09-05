@@ -1,5 +1,5 @@
 # RideAmigos
-Updating user location to URL
+Updating user location to a given URL
 
 
 This application requests the user's location as latitude+longitude and sends it to the URL that can be hardcoded into the application. 
